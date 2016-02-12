@@ -6,17 +6,24 @@ require 'sinatra/jsonp'
 
 # GET /
 get '/' do
-  "Welcome! You've reached the base endpoint of this terse API"
+  body = "Sorry, all the coffee has been drunk. Please see Dr Urbain for\
+  recommendations, and buy him a cup while you're at it."
+  body.reverse! if params[:wumbo]
+  [418, body]
 end
 
 
-# GET /download
+# GET /download /download?major=1 ...&minor=2 ...&patch=3
 #
 # Serve the update file
 get '/download' do
-  major = params[:major]
-  minor = params[:minor]
-  patch = params[:patch]
+  major = params[:major] || 0
+  minor = params[:minor] || 0
+  patch = params[:patch] || 0
+
+  update_file = Dir.new "updates/#{major}/#{minor}/#{patch}"
+  puts update_file
+
   'You are at the endpoint for downloading an update\n' <<
     "You are trying to download #{major}.#{minor}.#{patch}"
 end
@@ -36,13 +43,18 @@ end
 #     "download": "https://dimg.com/download?major=0&minor=4&patch=2"
 #   }
 get '/update' do
+  prng = Random.new
+  upd_maj = prng.rand 10
+  upd_min = prng.rand 6
+  upd_pat = prng.rand 30
   json_resp = {
       publisher: 'Distributed Interactive Mobile Gaming, Inc.',
-      publishDate: Time.now,
-      version: '0.50.1',
-      size: File.size('README.md'),
-      minFrameworkVer: '1.0.5',
-      download: 'https://dimg.com/download?major=0&minor=50&patch=1'
+      publishDate: Time.now + prng.rand(1...2000000),
+      version: "#{upd_maj}.#{upd_min}.#{upd_pat}",
+      size: prng.rand(1000000),
+      minFrameworkVer: "#{prng.rand(5)}.#{prng.rand(2)}.#{prng.rand(10)}",
+      download: "https://dimg.com/download?major=#{upd_maj}" <<
+          "&minor=#{upd_min}&patch=#{upd_pat}"
   }
   JSONP json_resp
 end

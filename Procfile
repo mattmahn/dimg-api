@@ -1,2 +1,2 @@
-web: ruby ./app.rb -p 80 -s thin
+web: ruby ./app.rb -s thin
 

@@ -46,7 +46,7 @@ get '/update' do
   upd_pat = prng.rand 30
   json_resp = {
       publisher: 'Distributed Interactive Mobile Gaming, Inc.',
-      publishDate: Time.now + prng.rand(1...2000000),
+      publishDate: Time.now - prng.rand(1...2000000),
       version: "#{upd_maj}.#{upd_min}.#{upd_pat}",
       size: prng.rand(1000000),
       minFrameworkVer: "#{prng.rand(5)}.#{prng.rand(2)}.#{prng.rand(10)}",

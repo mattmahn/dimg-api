@@ -15,17 +15,14 @@ end
 
 # GET /download /download?major=1 ...&minor=2 ...&patch=3
 #
-# Serve the update file
+# Serve the update file. Currently, this is only a JSON file that describes the
+# update since this is only intended to be a proof-of-concept.
 get '/download' do
-  major = params[:major] || 0
-  minor = params[:minor] || 0
-  patch = params[:patch] || 0
+  major = params[:major] || 1
+  minor = params[:minor] || 1
+  patch = params[:patch] || 1
 
-  update_file = Dir.new "updates/#{major}/#{minor}/#{patch}"
-  puts update_file
-
-  'You are at the endpoint for downloading an update\n' <<
-    "You are trying to download #{major}.#{minor}.#{patch}"
+  File.open "updates/#{major}/#{minor}/#{patch}/version.json"
 end
 
 

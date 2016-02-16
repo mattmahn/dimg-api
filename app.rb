@@ -33,24 +33,24 @@ end
 # Example JSON response:
 #   {
 #     "publisher": "Distributed Interactive Mobile Gaming, Inc.",
-#     "publishDate": "2016-02-29",
-#     "version": "0.4.2",
+#     "publishDate": "2016-02-29 23:12 +0000",
+#     "version": "2.1.2",
 #     "size": 732087,
-#     "minFrameworkVer": "1.0.1",
-#     "download": "https://dimg-api.herokuapp.com/download?major=0&minor=4&patch=2"
+#     "minFrameworkVersion": "1.0.1",
+#     "downloadUrl": "http://dimg-api.herokuapp.com/download?major=0&minor=4&patch=2"
 #   }
 get '/update' do
   prng = Random.new
-  upd_maj = prng.rand 10
-  upd_min = prng.rand 6
-  upd_pat = prng.rand 30
+  upd_maj = prng.rand 1..2
+  upd_min = prng.rand 1..2
+  upd_pat = prng.rand 1..2
   json_resp = {
       publisher: 'Distributed Interactive Mobile Gaming, Inc.',
-      publishDate: Time.now - prng.rand(1...2000000),
+      publishDate: Time.now - prng.rand(1..2000000),
       version: "#{upd_maj}.#{upd_min}.#{upd_pat}",
       size: prng.rand(1000000),
       minFrameworkVersion: "#{prng.rand(5)}.#{prng.rand(2)}.#{prng.rand(10)}",
-      downloadUrl: "https://dimg-api.herokuapp.com/download?major=#{upd_maj}" <<
+      downloadUrl: "http://dimg-api.herokuapp.com/download?major=#{upd_maj}" <<
           "&minor=#{upd_min}&patch=#{upd_pat}"
   }
   JSONP json_resp

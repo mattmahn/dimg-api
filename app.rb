@@ -49,8 +49,8 @@ get '/update' do
       publishDate: Time.now - prng.rand(1...2000000),
       version: "#{upd_maj}.#{upd_min}.#{upd_pat}",
       size: prng.rand(1000000),
-      minFrameworkVer: "#{prng.rand(5)}.#{prng.rand(2)}.#{prng.rand(10)}",
-      download: "https://dimg-api.herokuapp.com/download?major=#{upd_maj}" <<
+      minFrameworkVersion: "#{prng.rand(5)}.#{prng.rand(2)}.#{prng.rand(10)}",
+      downloadUrl: "https://dimg-api.herokuapp.com/download?major=#{upd_maj}" <<
           "&minor=#{upd_min}&patch=#{upd_pat}"
   }
   JSONP json_resp
